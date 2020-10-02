@@ -60,36 +60,6 @@ covid19 <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/mas
 
 ```
 
-## Put your homework on GitHub!
-
-If you were not able to get set up on GitHub last week, go [here](https://github.com/llendway/github_for_collaboration/blob/master/github_for_collaboration.md) and get set up first. Then, do the following (if you get stuck on a step, don't worry, I will help! You can always get started on the homework and we can figure out the GitHub piece later):
-
-* Create a repository on GitHub, giving it a nice name so you know it is for the 4th weekly exercise assignment (follow the instructions in the document/video).  
-* Copy the repo name so you can clone it to your computer. In R Studio, go to file --> New project --> Version control --> Git and follow the instructions from the document/video.  
-* Download the code from this document and save it in the repository folder/project on your computer.  
-* In R Studio, you should then see the .Rmd file in the upper right corner in the Git tab (along with the .Rproj file and probably .gitignore).  
-* Check all the boxes of the files in the Git tab under Stage and choose commit.  
-* In the commit window, write a commit message, something like "Initial upload" would be appropriate, and commit the files.  
-* Either click the green up arrow in the commit window or close the commit window and click the green up arrow in the Git tab to push your changes to GitHub.  
-* Refresh your GitHub page (online) and make sure the new documents have been pushed out.  
-* Back in R Studio, knit the .Rmd file. When you do that, you should have two (as long as you didn't make any changes to the .Rmd file, in which case you might have three) files show up in the Git tab - an .html file and an .md file. The .md file is something we haven't seen before and is here because I included `keep_md: TRUE` in the YAML heading. The .md file is a markdown (NOT R Markdown) file that is an interim step to creating the html file. They are displayed fairly nicely in GitHub, so we want to keep it and look at it there. Click the boxes next to these two files, commit changes (remember to include a commit message), and push them (green up arrow).  
-* As you work through your homework, save and commit often, push changes occasionally (maybe after you feel finished with an exercise?), and go check to see what the .md file looks like on GitHub.  
-* If you have issues, let me know! This is new to many of you and may not be intuitive at first. But, I promise, you'll get the hang of it! 
-
-
-## Instructions
-
-* Put your name at the top of the document. 
-
-* **For ALL graphs, you should include appropriate labels.** 
-
-* Feel free to change the default theme, which I currently have set to `theme_minimal()`. 
-
-* Use good coding practice. Read the short sections on good code with [pipes](https://style.tidyverse.org/pipes.html) and [ggplot2](https://style.tidyverse.org/ggplot2.html). **This is part of your grade!**
-
-* When you are finished with ALL the exercises, uncomment the options at the top so your document looks nicer. Don't do it before then, or else you might miss some important warnings and messages.
-
-
 ## Warm-up exercises from tutorial
 
 These exercises will reiterate what you learned in the "Mapping data with R" tutorial. If you haven't gone through the tutorial yet, you should do that first.
@@ -130,7 +100,8 @@ ggmap(twin_cities_map) +
              aes(x = Longitude, y = Latitude),
              alpha = 3,
              size = 1)+
-  theme_map()
+  theme_map()+
+  labs(title = "Starbucks Locations in Twin Cities")
 ```
 
   3. In the Twin Cities plot, play with the zoom number. What does it do?  (just describe what it does - don't actually include more than one map).  
@@ -145,7 +116,8 @@ ggmap(twin_cities_map) +
              aes(x = Longitude, y = Latitude),
              alpha = .3,
              size = .1)+
-  theme_map()
+  theme_map()+
+  labs(title = "Starbucks Locations in Twin Cities")
 ```
 **It lessens/heightens the detail on the map; the smaller the number the less detail, the higher the number the more detail. In the tutorial it said be careful, cause the more detail the longer it takes to load. I used 11 on the previous map because that was the zoom on the openstreetmap.**
 
@@ -162,7 +134,8 @@ ggmap(twin_cities_map) +
              aes(x = Longitude, y = Latitude),
              alpha = 3,
              size = 3)+
-  theme_map()
+  theme_map()+
+  labs(title = "Starbucks Locations in Twin Cities")
 ```
 
   5. Add a point to the map that indicates Macalester College and label it appropriately. There are many ways you can do think, but I think it's easiest with the `annotate()` function (see `ggplot2` cheatsheet).
@@ -179,7 +152,8 @@ ggmap(twin_cities_map) +
              alpha = 3,
              size = 3)+
   theme_map()+
-  annotate("text", x = -93.1593, y = 44.9420, label = "Macalester College")
+  annotate("text", x = -93.1593, y = 44.9420, label = "Macalester College")+
+  labs(title = "Starbucks Locations in Twin Cities")
 ```
 
 ### Choropleth maps with Starbucks data (`geom_map()`)
@@ -234,6 +208,11 @@ starbucks_us <- Starbucks %>%
   8. In this exercise, you are going to create a single map of some of your favorite places! The end result will be one map that satisfies the criteria below. 
 
   * Create a data set using the `tibble()` function that has 10-15 rows of your favorite places. The columns will be the name of the location, the latitude, the longitude, and a column that indicates if it is in your top 3 favorite locations or not. For an example of how to use `tibble()`, look at the `favorite_stp_by_lisa` I created in the data R code chunk at the beginning.
+    * Create a `leaflet` map that uses circles to indicate your favorite places. Label them with the name of the place. Choose the base map you like best. Color your 3 favorite places differently than the ones that are not in your top 3 (HINT: `colorFactor()`). Add a legend that explains what the colors mean.  
+  
+  * Connect all your locations together with a line in a meaningful way (you may need to order them differently in the original data).  
+  
+  * If there are other variables you want to add that could enhance your plot, do that now. 
 
 
 ```{r}
@@ -264,12 +243,6 @@ leaflet(data = favorite_stp_by_chey) %>%
   addLegend("bottomleft", title = "Chey's Favorite Stops",labels = "place", colors = col2hex("lightgreen"))
 ```
 
-  * Create a `leaflet` map that uses circles to indicate your favorite places. Label them with the name of the place. Choose the base map you like best. Color your 3 favorite places differently than the ones that are not in your top 3 (HINT: `colorFactor()`). Add a legend that explains what the colors mean.  
-  
-  * Connect all your locations together with a line in a meaningful way (you may need to order them differently in the original data).  
-  
-  * If there are other variables you want to add that could enhance your plot, do that now.  
-  
 ## Revisiting old datasets
 
 This section will revisit some datasets we have used previously and bring in a mapping component. 
@@ -307,7 +280,8 @@ stations_new <- Stations %>%
     zoom = 12)
 ggmap(washington_dc) +
   geom_point(data = stations_new, 
-             aes(x = long, y = lat, color = count))
+             aes(x = long, y = lat, color = count))+
+  labs(title = "Total # of Departures")
 ```
   
   10. Only 14.4% of the trips in our data are carried out by casual users. Create a plot that shows which area(s) have stations with a much higher percentage of departures by casual users. What patterns do you notice? Also plot this on top of a map. I think it will be more clear what the patterns are.
@@ -325,7 +299,8 @@ stations_new <- Stations %>%
     zoom = 12)
 ggmap(washington_dc) +
   geom_point(data = stations_new, 
-             aes(x = long, y = lat, color = percent_casual))
+             aes(x = long, y = lat, color = percent_casual))+
+  labs(title = "Total # of Departures")
 ```
   
 ### COVID-19 data
@@ -391,10 +366,11 @@ carData::MplsStops
   
 ```{r}
 mpls_suspicious <- MplsStops %>% 
-  mutate(sus = problem == "suspicous") %>% 
+  mutate(sus = problem == "suspicious") %>% 
   group_by(neighborhood) %>% 
   summarise(total_stops = n(),
-            prop_sus = sum(sus)/total_stops) %>% 
+            prop_sus = sum(sus)/total_stops
+            ) %>% 
   arrange(desc(total_stops))
 
 show(mpls_suspicious)
@@ -415,15 +391,46 @@ leaflet(data = MplsStops) %>%
 ```
   
   16. Save the folder from moodle called Minneapolis_Neighborhoods into your project/repository folder for this assignment. Make sure the folder is called Minneapolis_Neighborhoods. Use the code below to read in the data and make sure to **delete the `eval=FALSE`**. Although it looks like it only links to the .sph file, you need the entire folder of files to create the `mpls_nbhd` data set. These data contain information about the geometries of the Minneapolis neighborhoods. Using the `mpls_nbhd` dataset as the base file, join the `mpls_suspicious` and `MplsDemo` datasets to it by neighborhood (careful, they are named different things in the different files). Call this new dataset `mpls_all`.
-
+  
 ```{r}
 mpls_nbhd <- st_read("Minneapolis_Neighborhoods/Minneapolis_Neighborhoods.shp", quiet = TRUE)
+mpsl_sus_to_nbhd <- mpls_nbhd %>% 
+  left_join(mpls_suspicious,
+            by = c("BDNAME" = "neighborhood"))
+mpsl_all <- mpsl_sus_to_nbhd %>% 
+  left_join(MplsDemo,
+            by = c("BDNAME" = "neighborhood"))
+
 ```
 
   17. Use `leaflet` to create a map from the `mpls_all` data  that colors the neighborhoods by `prop_suspicious`. Display the neighborhood name as you scroll over it. Describe what you observe in the map.
+```{r}
+colors <- colorNumeric("Reds", 
+                      domain = mpsl_all$prop_sus)
+leaflet(data = mpsl_all) %>%
+  addProviderTiles(providers$Stamen.Terrain) %>%
+  addPolygons(stroke = FALSE,
+              fillColor = ~colors(prop_sus),
+              fillOpacity = 0.7,
+              label = ~BDNAME) 
+```
   
   18. Use `leaflet` to create a map of your own choosing. Come up with a question you want to try to answer and use the map to help answer that question. Describe what your map shows. 
-  
+**How many Starbucks are there in Chicago?**
+
+
+```{r}
+s_starbucks_chicago <- Starbucks %>% 
+  filter(City %in% c("Chicago"))
+
+leaflet(data = s_starbucks_chicago) %>% 
+  addProviderTiles(providers$Stamen.Terrain) %>% 
+  addCircles(lng = ~Longitude,
+             lat = ~Latitude,
+             weight = 10,
+             opacity = 1,
+             color = col2hex("lightblue"))
+```
   
 ## GitHub link
 
